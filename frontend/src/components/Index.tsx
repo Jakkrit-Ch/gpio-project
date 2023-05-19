@@ -150,7 +150,7 @@ function Index() {
   
                </Box>
                <script src="/socket.io/socket.io.js"></script>
-               <script src="main.js"></script>
+               <script src="http://192.168.137.11/"></script>
             </Container>
             
          </div>

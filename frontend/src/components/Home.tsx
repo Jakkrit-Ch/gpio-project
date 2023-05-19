@@ -1,156 +1,197 @@
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { Typography } from "@mui/material";
+import { Link, Link as RouterLink, useHref } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
+import List from "@mui/material/List";
 import Button from "@mui/material/Button";
-import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from '@mui/material/Unstable_Grid2';
 
-import { RoomInterface } from "../models/IRoom";
+import { UserInterface } from "../models/IUser";
+import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRounded';
+
 import { useEffect, useState } from "react";
+import { width } from "@mui/system";
 
 const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    container: {
-      marginTop: theme.spacing(2),
-    },
-    table: {
-      minWidth: 650,
-    },
-    tableSpace: {
-      marginTop: 20,
-    },
-  })
+   createStyles({
+      container: {
+         marginTop: theme.spacing(2),
+      },
+      table: {
+         minWidth: 650,
+      },
+      tableSpace: {
+         marginTop: 20,
+      },
+   })
 );
 
 
 
 function Home() {
-  const [rooms, setRooms] = useState<RoomInterface[]>([]);
-  const classes = useStyles();
+   let navigate = useNavigate();
+   const [users, setUsers] = useState<UserInterface>();
+   const [role, setRole] = useState<String | null>("");
+   const [link, setLink] = useState<String>("");
 
-  const apiUrl = "http://localhost:8080";
-  const requestOptions = {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-      "Content-Type": "application/json",
-    },
-  };
+   const apiUrl = "http://localhost:8080";
+   const requestOptions = {
+      method: "GET",
+      headers: {
+         Authorization: `Bearer ${localStorage.getItem("token")}`,
+         "Content-Type": "application/json",
+      },
+   };
 
-  const getRoom = async () => {
-    fetch(`${apiUrl}/rooms`, requestOptions)
-      .then((response) => response.json())
-      .then((res) => {
-        console.log(res.data);
-        if (res.data) {
-            setRooms(res.data);
-        } else {
-          console.log("else");
-        }
-      });
-  };
+   // // console.log(users?.Role);
+   
+   // const getLink = async () => {
+   //    const role = localStorage.getItem("role");
+   //    console.log(role);
+   // }
 
+   const getUsers = async () => {
+      const uid = localStorage.getItem("uid");
+      fetch(`${apiUrl}/user/${uid}`, requestOptions)
+         .then((response) => response.json())
+         .then((res) => {
+            if (res.data) {
+               setUsers(res.data);
+            } else {
+               console.log("else");
+            }
+         });
+   };
 
-  useEffect(() => {
-    getRoom();
-  }, []);
+   useEffect(() => {
+      getUsers();
+      const role = localStorage.getItem('role');
+      if (role) {
+         setRole(role);
+      }
+   }, []);
 
-  return (
-    <div>
-      <Container className={classes.container} maxWidth="md">
-        <Box
-          sx={{ 
-            fontFamily: "PK Krung Thep Medium",
-            fontSize: "24px",
-            background: "url(https://png.pngtree.com/thumb_back/fh260/background/20201009/pngtree-light-blue-background-design-image_405678.jpg)",
-            backgroundRepeat: "no-repeat",
-            backgroundSize: "cover",
-          }}
-        >
-          <Paper elevation={3}>
-            <Box sx={{ 
-              m: 1.5,
-            }}
+   const apiLink = [
+      {path: "http://localhost:3000/", role: "admin" },
+      {path: `http://192.168.137.`, role: "user" },
+   ]
+
+   return (
+      <Box color='inherit'
+         sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+         }}
+      >
+         <Box sx={{
+            height: '100%',
+            width: '100vh',
+            display: "flex",
+            flexDirection: 'column',
+            justifyContent: "center",
+            alignItems: "center",
+         }}>
+
+            <Typography
+               sx={{
+                  display: 'grid',
+                  justifyContent: 'center',
+                  fontFamily: 'Bangna New',
+                  fontWeight: 'bold',
+                  fontSize: '30px',
+               }}
             >
-              <Grid container spacing={3}>
-                  {rooms.map((item: RoomInterface) => (
-                    <Grid xs={4}>
-                      <Typography 
-                        align="center"
-                        sx={{ 
-                          fontFamily: "PK Krung Thep Medium",
-                          fontSize: 35 
-                        }} 
-                        color="text.primary"
-                      >
-                        <b>ห้อง {item.Userrole}</b>
-                      </Typography>
-                      <Button 
-                        component="span"
-                        sx={{ 
-                        display: 'flex',
-                        justifyContent: 'center',
-                        flexGrow: 1,
-                        m: 1,
-                        boxShadow: 5,
-                        borderRadius: 4,
-                        bgcolor: '#00e676',
-                        '&:hover': {
-                          backgroundColor: '#00c853',
-                        },
-                        
-                        }}
-                      >
-                        <Typography 
-                          align="center"
-                          sx={{ 
-                            fontFamily: "PK Krung Thep Medium",
-                          }} 
-                          color="#fafafa"
-                        >
-                          <Typography 
-                            align="center"
-                            sx={{ 
-                              fontFamily: "PK Krung Thep Medium",
-                              fontSize: 40,
-                            }} 
-                            color="#fafafa"
-                          >
-                            <b><u>{item.Username}</u></b>
-                          </Typography>
-                          <h4>
-                            <b>ขนาดห้อง:</b> {item.Usertel}<br/>
-                          </h4>
-                        </Typography>                      
-                      </Button>
-                    </Grid>
-                    
-                    
-                  ))}
-                  
-              </Grid>
+               {users?.Room}
+               <h1>{users?.Firstname} {users?.Lastname}</h1>
+            </Typography>
+
+
+            <Box>
+               <List sx={{ height: '100%' }}>
+                  {apiLink.map(
+                     (item, index) =>
+                        role === item.role && (
+
+                           <Button
+                              // onClick={() => navigate(item.role)}
+                              href={item.path+`${users?.Path}`}
+                              // href={item.path}
+                              // target="_blank"
+                              sx={{
+                                 display: 'flex',
+                                 justifyContent: 'left',
+                                 fontFamily: 'Bangna New',
+                                 fontWeight: 'bold',
+                                 fontSize: '20px',
+                                 width: '50px',
+                                 height: '60px',
+                                 borderRadius: '30px',
+                                 boxShadow: '3',
+                                 transition: 'all 0.6s',
+                                 bgcolor: '#fcdc00',
+                                 color: 'black',
+                                 overflow: 'hidden',
+                                 '&:hover': {
+                                    width: '180px',
+                                    // justifyContent: 'center',
+                                    bgcolor: '#fcdc00',
+                                    color: 'black',
+                                    borderRadius: "50px",
+                                 },
+
+                              }}
+                           >
+                              {<ArrowForwardIosRoundedIcon style={{ marginRight: 10, marginLeft: 15 }} />}
+                              <h2 style={{ marginLeft: 10, marginRight: 15 }}>Next</h2>
+                           </Button>
+                        )
+                  )}
+               </List>
             </Box>
-          </Paper>
-        </Box>
 
-        <Box
-          sx={{ 
-            fontFamily: "PK Krung Thep Medium",
-            background: "url(https://png.pngtree.com/thumb_back/fh260/background/20201009/pngtree-light-blue-background-design-image_405678.jpg)",
-            backgroundRepeat: "no-repeat",
-            backgroundSize: "cover",
-          }}
-        >
-          <h1 style={{ textAlign: "center", fontSize: 40 }}>ระบบควบคุมการทำงานของหลอดไฟ</h1>
-        </Box>
-        
-        
 
-        
-      </Container>
-    </div>
-  );
+
+            {/* <Box>
+               <Button
+                  // variant="contained"
+                  // color="warning"
+                  // onClick={() => navigate(`${users?.Role}`)}
+                  sx={{
+                     display: 'flex',
+                     justifyContent: 'left',
+                     fontFamily: 'Bangna New',
+                     fontWeight: 'bold',
+                     fontSize: '20px',
+                     width: '50px',
+                     height: '60px',
+                     borderRadius: '30px',
+                     boxShadow: '3',
+                     transition: 'all 0.6s',
+                     bgcolor: '#fcdc00',
+                     color: 'black',
+                     overflow: 'hidden',
+                     '&:hover': {
+                        width: '180px',
+                        // justifyContent: 'center',
+                        bgcolor: '#fcdc00',
+                        color: 'black',
+                        borderRadius: "50px",
+                     },
+                     
+                  }}
+               >
+                  {<ArrowForwardIosRoundedIcon style={{ marginRight: 10, marginLeft: 15 }} />} 
+                  <h2 style={{ marginLeft: 10, marginRight: 15 }}>Next</h2>
+               
+               </Button>
+            </Box> */}
+
+         </Box>
+      </Box>
+   );
 }
 export default Home;

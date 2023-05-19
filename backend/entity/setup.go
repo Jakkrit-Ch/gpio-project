@@ -29,35 +29,41 @@ func SetupDatabase() {
 	// Migrate the schema
 
 	database.AutoMigrate(
-		&User{}, &Room{},
+		&User{},
 	)
 
 	db = database
 
 
-	password, err := bcrypt.GenerateFromPassword([]byte("123456"), 14)
+	password, _ := bcrypt.GenerateFromPassword([]byte("123456"), 14)
 
 	db.Model(&User{}).Create(&User{
-		Name:     	"Jakkrit Chaiwan",
+		Firstname:     	"Jakkrit",
+		Lastname:     	"Chaiwan",
 		Email:   		"jackerchaiwan@gmail.com",
-		Tel:   		"0610255279",
-		Password: 	string(password),
-		Role:		"admin",
+		Tel:   			"0610255279",
+		Room: 			"Admin",
+		Password: 		string(password),
+		Role:			"admin",
+		Path: 			"admin",
 	})
 
 	db.Model(&User{}).Create(&User{
-		Name:     	"User01",
-		Email:   		"employee@gmail.com",
-		Tel:   		"0951677644",
-		Password: 	string(password),
-		Role:     	"101",
+		Firstname:     	"User",
+		Lastname:     	"01",
+		Email:   		"user01@gmail.com",
+		Tel:   			"0951677644",
+		Room: 			"A11",
+		Password: 		string(password),
+		Role:     		"user",
+		Path: 			"11",	
 	})
 
 	var jakkrit	User
 	db.Raw("SELECT * FROM users WHERE email = ?", "jackerchaiwan@gmail.com").Scan(&jakkrit)
 
-	var admin  	User
-	db.Raw("SELECT * FROM users WHERE email = ?", "employee@gmail.com").Scan(&admin)
+	var user01  	User
+	db.Raw("SELECT * FROM users WHERE email = ?", "user01@gmail.com").Scan(&user01)
 
 
 }

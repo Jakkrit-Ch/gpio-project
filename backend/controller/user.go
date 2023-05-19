@@ -101,13 +101,24 @@ func UpdateUser(c *gin.Context) {
 		   c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		   return
 	}
-	if tx := entity.DB().Where("id = ?", user.ID).First(&user); tx.RowsAffected == 0 {
-		   c.JSON(http.StatusBadRequest, gin.H{"error": "user not found"})
-		   return
+
+	bytes, err := bcrypt.GenerateFromPassword([]byte(user.Password), 14)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "error hashing password"})
+		return
 	}
-	if err := entity.DB().Save(&user).Error; err != nil {
+	user.Password = string(bytes)
+
+	// ขั้นตอนการ validate ที่นำมาจาก unit test
+	if _, err := govalidator.ValidateStruct(user); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	if err := entity.DB().Where("id = ?", user.ID).Updates(&user).Error; err != nil {
 		   c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		   return
 	}
+	
 	c.JSON(http.StatusOK, gin.H{"data": user})
 }

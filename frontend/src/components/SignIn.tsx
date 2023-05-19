@@ -85,15 +85,17 @@ function SignIn() {
             อีเมลหรือรหัสผ่านไม่ถูกต้อง
           </Alert>
         </Snackbar>
-        
+
         <CssBaseline />
         <Grid
           item
-          xs={false}
-          sm={4}
-          md={7}
+          xs={12}
+          // sm={4}
+          // md={7}
           sx={{
-            backgroundImage: "url(https://source.unsplash.com/random)",
+            display: "flex",
+            justifyContent: "center",
+            backgroundImage: "url(https://img.freepik.com/free-vector/minimal-geometric-stripe-shape-background_1409-1014.jpg?w=1060&t=st=1682155563~exp=1682156163~hmac=fba806e5fa83ba7720cc2efe3af620b4b989562eb82ede2b9d90062f848e836a)",
             backgroundRepeat: "no-repeat",
             backgroundColor: (t) =>
               t.palette.mode === "light"
@@ -102,73 +104,100 @@ function SignIn() {
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}
-        />
-        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-          <Box
+        >
+          <Box 
             sx={{
-              my: 8,
-              mx: 4,
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              alignSelf: "center",
+              mt: "auto",
+              mb: "auto",
+              height: 'auto',
+              width: '700px',
+              borderRadius: "20px",
+              backgroundColor: "rgba(255,255,255,0.8)",
+
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-              <LockOutlinedIcon />
-            </Avatar>
-            <Typography component="h1" variant="h5">
-              Sign in
-            </Typography>
-            <Box sx={{ mt: 1 }}>
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="Email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-                autoFocus
-                value={signin.Email || ""}
-                onChange={handleInputChange}
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="Password"
-                autoComplete="current-password"
-                value={signin.Password || ""}
-                onChange={handleInputChange}
-              />
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
-              />
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-                onClick={submit}
-              >
-                เข้าสู่ระบบ
-              </Button>
+            <Box
+              sx={{
+                my: 4,
+                mx: 4,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                alignSelf: "center",
+              }}
+            >
+              <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+                <LockOutlinedIcon />
+              </Avatar>
 
-              
-              {/* <Button
-                onClick={component={}
-                color="success"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
+              <Typography 
+                component="h1" 
+                variant="h5"
+                sx={{
+                  fontFamily: 'Bangna New',
+                  fontWeight: 'bold',
+                }}
               >
-                ผู้ใช้ใหม่
-              </Button> */}
+                <h2>Sign in</h2>
+              </Typography>
+
+              <Box sx={{ mt: 1, display: 'grid', width: '100%' }}>
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="Email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                  autoFocus
+                  value={signin.Email || ""}
+                  onChange={handleInputChange}
+                  inputProps={{
+                    style: { fontFamily: "Bangna New", fontSize: 20, fontWeight: "bold" },
+                 }}
+                />
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="Password"
+                  autoComplete="current-password"
+                  value={signin.Password || ""}
+                  onChange={handleInputChange}
+                />
+                <FormControlLabel
+                  control={<Checkbox value="remember" color="success" />}
+                  // label="Remember me"
+                  label={<Typography style={{ fontFamily: "Bangna New", fontSize: 20, fontWeight: "bold" }}>
+                    Remember me
+                  </Typography>}
+                />
+                <Button
+                  type="submit"
+                  color="success"
+                  fullWidth
+                  variant="contained"
+                  onClick={submit}
+                  sx={{
+                    mt: '3',
+                    mb: '2',
+                    ml: 'auto',
+                    mr: 'auto',
+                    fontFamily: "Bangna New",
+                    fontWeight: 'bold',
+                    fontSize: '20px',
+                    borderRadius: '15px',
+                    width: '300px',
+
+                  }}
+                >
+                  Log in
+                </Button>
+              </Box>
             </Box>
           </Box>
         </Grid>
