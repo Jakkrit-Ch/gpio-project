@@ -138,6 +138,11 @@ function App() {
    if (!token) {
       return <SignIn />;
    }
+   // if (token) {
+   //    if (role === "admin") {
+   //       return <HomeAdmin />;
+   //    }
+   // }
 
    const signout = () => {
       localStorage.clear();

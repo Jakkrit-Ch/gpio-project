@@ -75,7 +75,7 @@ function Home() {
    }, []);
 
    const apiLink = [
-      {path: "http://localhost:3000/", role: "admin" },
+      {path: "/", role: "admin" },
       {path: `http://192.168.137.`, role: "user" },
    ]
 
@@ -117,8 +117,10 @@ function Home() {
                         role === item.role && (
 
                            <Button
+                              component={RouterLink}
+                              to={"/"+`${users?.Path}`}
                               // onClick={() => navigate(item.role)}
-                              href={item.path+`${users?.Path}`}
+                              // href={item.path+`${users?.Path}`}
                               // href={item.path}
                               // target="_blank"
                               sx={{
