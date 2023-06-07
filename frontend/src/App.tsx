@@ -14,9 +14,10 @@ import Button from "@mui/material/Button";
 import RoofingRoundedIcon from '@mui/icons-material/RoofingRounded';
 import LogoutIcon from '@mui/icons-material/Logout';
 import PersonAddRoundedIcon from '@mui/icons-material/PersonAddRounded';
+import EmojiObjectsOutlinedIcon from '@mui/icons-material/EmojiObjectsOutlined';
 
 
-import Home from "./components/Home";
+import Home from "./components/HomeUser";
 import HomeAdmin from "./components/HomeAdmin";
 
 import Users from "./components/Users";
@@ -101,6 +102,10 @@ function App() {
 
    ];
 
+   const checkrole = [
+      { role: `${users?.Role}`, path: `/${users?.Role}` },
+   ];
+
    const apiUrl = "http://localhost:8080";
    const requestOptions = {
       method: "GET",
@@ -138,11 +143,15 @@ function App() {
    if (!token) {
       return <SignIn />;
    }
-   // if (token) {
-   //    if (role === "admin") {
-   //       return <HomeAdmin />;
-   //    }
-   // }
+   var rolePage
+   if (token) {
+      if (role === "admin") {
+         rolePage = HomeAdmin
+
+      } else if (role === "user") {
+         rolePage = Home
+      }
+   }
 
    const signout = () => {
       localStorage.clear();
@@ -152,16 +161,15 @@ function App() {
    return (
       <Router>
          <Box>
-            <AppBar position="absolute" open={open}>
+            <AppBar position="absolute" color="transparent">
                <Toolbar
                   sx={{
                      // pr: "24px", // keep right padding when drawer closed
-                     backgroundImage: "url(https://img.freepik.com/premium-photo/abstract-wave-pattern-blue-yellow-background_527140-1023.jpg?size=626&ext=jpg&ga=GA1.1.2075763464.1682155417&semt=sph)",
-                     backgroundRepeat: "no-repeat",
-                     backgroundSize: "cover",
-                     backgroundPosition: "center",
+                     // backgroundImage: "url(https://img.freepik.com/premium-photo/abstract-wave-pattern-blue-yellow-background_527140-1023.jpg?size=626&ext=jpg&ga=GA1.1.2075763464.1682155417&semt=sph)",
+                     // backgroundRepeat: "no-repeat",
+                     // backgroundSize: "cover",
+                     // backgroundPosition: "center",
                      height: '70px',
-                     // bgcolor: '#dce775',
                      overflow: 'hidden',
                   }}
                >
@@ -174,14 +182,14 @@ function App() {
                         display: 'flex',
                         justifyContent: 'center',
                         flexGrow: 1,
-                        fontFamily: "a Apple Tea",
+                        fontFamily: "MontereyFLF",
                         fontWeight: 'bold',
                         // fontFamily: "Ubuntu Condensed",
                         fontSize: "30px",
-                        color: '#2c82c9',
+                        color: 'black',
                      }}
                   >
-                     LED Controller System
+                     LIGHT CONTROL {<EmojiObjectsOutlinedIcon color="warning" />}
                   </Typography>
 
 
@@ -251,7 +259,7 @@ function App() {
                sx={{
                   display: "flex",
                   justifyContent: "center",
-                  backgroundImage: "url(https://img.freepik.com/premium-photo/abstract-wave-pattern-blue-yellow-background_527140-1023.jpg?size=626&ext=jpg&ga=GA1.1.2075763464.1682155417&semt=sph)",
+                  backgroundImage: "url(https://i.pinimg.com/564x/b9/31/c0/b931c0b7a929a48d1db7736c4bf83238.jpg)",
                   backgroundRepeat: "no-repeat",
                   backgroundSize: "cover",
                   backgroundPosition: "center",
@@ -261,7 +269,7 @@ function App() {
                   mt: '90px',
                   height: '85%',
                   width: '90%',
-                  backgroundColor: 'rgba(255, 255, 255, 0.5)',
+                  // backgroundColor: 'rgba(255, 255, 255, 0.5)',
                   display: 'flex',
                   justifyContent: 'center',
                   alignItems: 'center',
@@ -276,12 +284,32 @@ function App() {
                      height: '95%',
                      display: 'flex',
                      justifyContent: 'center',
-                     // alignItems: 'center',
+                     alignItems: 'center',
                   }}>
-
+                     <List sx={{ height: '100%' }}>
+                        {checkrole.map(
+                           item =>
+                              role === 'admin' && (
+                                 <Routes>
+                                    <Route path="/" element={<HomeAdmin />} />
+                                 </Routes>
+                              )
+                        )}
+                     </List>
+                     <List>
+                        {checkrole.map(
+                           item =>
+                              role === 'user' && (
+                                 <Routes>
+                                    <Route path="/" element={<Home />} />
+                                 </Routes>
+                              )
+                        )}
+                     </List>
                      <Routes>
-                        <Route path="/" element={<Home />} />
-                        <Route path="/admin" element={<HomeAdmin />} />
+
+                        {/* <Route path="/" element={<Home />} /> */}
+                        {/* <Route path="/admin" element={<HomeAdmin />} /> */}
                         <Route path="/user" element={<Index />} />
 
                         <Route path="/users" element={<Users />} />

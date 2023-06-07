@@ -10,6 +10,7 @@ import Grid from '@mui/material/Unstable_Grid2';
 
 import TungstenRoundedIcon from '@mui/icons-material/TungstenRounded';
 import TungstenTwoToneIcon from '@mui/icons-material/TungstenTwoTone';
+import EmojiObjectsOutlinedIcon from '@mui/icons-material/EmojiObjectsOutlined';
 
 import { UserInterface } from "../models/IUser";
 
@@ -31,33 +32,33 @@ const useStyles = makeStyles((theme: Theme) =>
 
 
 const members = [
-   { name: "A11", icon: <TungstenTwoToneIcon />, path: "http://192.168.137.11", url: "https://i.pinimg.com/564x/66/a8/d4/66a8d47225f333ae0c7d673481c76ca9.jpg" },
-   { name: "A12", icon: <TungstenTwoToneIcon />, path: "http://192.168.137.12" },
-   { name: "A13", icon: <TungstenTwoToneIcon />, path: "http://192.168.137.13" },
-   { name: "A14", icon: <TungstenTwoToneIcon />, path: "http://192.168.137.14" },
-   { name: "A15", icon: <TungstenTwoToneIcon />, path: "http://192.168.137.15" },
-   { name: "A16", icon: <TungstenTwoToneIcon />, path: "http://192.168.137.16" },
+   { name: "A11", path: "http://192.168.137.11" },
+   { name: "A12", path: "http://192.168.137.12" },
+   { name: "A13", path: "http://192.168.137.13" },
+   { name: "A14", path: "http://192.168.137.14" },
+   { name: "A15", path: "http://192.168.137.15" },
+   { name: "A16", path: "http://192.168.137.16" },
    
-   { name: "A21", icon: <TungstenTwoToneIcon />, path: "http://192.168.137.21" },
-   { name: "A22", icon: <TungstenTwoToneIcon />, path: "http://192.168.137.22" },
-   { name: "A23", icon: <TungstenTwoToneIcon />, path: "http://192.168.137.23" },
-   { name: "A24", icon: <TungstenTwoToneIcon />, path: "http://192.168.137.24" },
-   { name: "A25", icon: <TungstenTwoToneIcon />, path: "http://192.168.137.25" },
-   { name: "A26", icon: <TungstenTwoToneIcon />, path: "http://192.168.137.26" },
+   { name: "A21", path: "http://192.168.137.21" },
+   { name: "A22", path: "http://192.168.137.22" },
+   { name: "A23", path: "http://192.168.137.23" },
+   { name: "A24", path: "http://192.168.137.24" },
+   { name: "A25", path: "http://192.168.137.25" },
+   { name: "A26", path: "http://192.168.137.26" },
 
-   { name: "A31", icon: <TungstenTwoToneIcon />, path: "http://192.168.137.31" },
-   { name: "A32", icon: <TungstenTwoToneIcon />, path: "http://192.168.137.32" },
-   { name: "A33", icon: <TungstenTwoToneIcon />, path: "http://192.168.137.33" },
-   { name: "A34", icon: <TungstenTwoToneIcon />, path: "http://192.168.137.34" },
-   { name: "A35", icon: <TungstenTwoToneIcon />, path: "http://192.168.137.35" },
-   { name: "A36", icon: <TungstenTwoToneIcon />, path: "http://192.168.137.36" },
+   { name: "A31", path: "http://192.168.137.31" },
+   { name: "A32", path: "http://192.168.137.32" },
+   { name: "A33", path: "http://192.168.137.33" },
+   { name: "A34", path: "http://192.168.137.34" },
+   { name: "A35", path: "http://192.168.137.35" },
+   { name: "A36", path: "http://192.168.137.36" },
 
-   { name: "A41", icon: <TungstenTwoToneIcon />, path: "http://192.168.137.41" },
-   { name: "A42", icon: <TungstenTwoToneIcon />, path: "http://192.168.137.42" },
-   { name: "A43", icon: <TungstenTwoToneIcon />, path: "http://192.168.137.43" },
-   { name: "A44", icon: <TungstenTwoToneIcon />, path: "http://192.168.137.44" },
-   { name: "A45", icon: <TungstenTwoToneIcon />, path: "http://192.168.137.45" },
-   { name: "A46", icon: <TungstenTwoToneIcon />, path: "http://192.168.137.46" },
+   { name: "A41", path: "http://192.168.137.41" },
+   { name: "A42", path: "http://192.168.137.42" },
+   { name: "A43", path: "http://192.168.137.43" },
+   { name: "A44", path: "http://192.168.137.44" },
+   { name: "A45", path: "http://192.168.137.45" },
+   { name: "A46", path: "http://192.168.137.46" },
 
 ]
 
@@ -125,12 +126,12 @@ function HomeAdmin() {
                   {members.map(item =>
 
                      <Grid xs={2}>
-                        <Button variant="outlined"
+                        <Button
                            href={item.path}
                            // target="_blank"
                            sx={{
-                              backgroundImage: 'url(https://i.pinimg.com/564x/66/a8/d4/66a8d47225f333ae0c7d673481c76ca9.jpg)',
-                              backgroundRepeat: 'no-repeat',
+                              // backgroundImage: 'url(https://i.pinimg.com/564x/66/a8/d4/66a8d47225f333ae0c7d673481c76ca9.jpg)',
+                              // backgroundRepeat: 'no-repeat',
                               // backgroundSize: 'cover',
                               backgroundPosition: 'right',
                               fontFamily: "Bangna New",
@@ -138,20 +139,23 @@ function HomeAdmin() {
                               color: 'black',
                               height: '100px',
                               width: '100%',
+                              background: 'rgba(255, 255, 255, 0.2)',
                               borderRadius: "20px",
+                              // borderColor: "White",
+                              // boxShadow: "10px 10px 60px #bebebe, -10px -10px 60px #ffffff",
                               boxShadow: 5,
                               transition: 'all .3s',
                               '&:hover': {
                                  // backgroundPosition: "bottom",
                                  transform: 'scale(1.08)',
-                                 borderColor: '#2ccce4',
-                                 bgcolor: '#2ccce4',
+                                 bgcolor: '#FFEB3B',
                                  color: 'black',
                                  borderRadius: "20px",
                               }
                            }}
                         >
-                           {item.icon}
+                           {/* { item.icon } */}
+                           {<EmojiObjectsOutlinedIcon color="warning"/>}
                            <b>{item.name}</b>
                         </Button>
                      </Grid>
